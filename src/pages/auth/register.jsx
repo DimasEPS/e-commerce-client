@@ -21,9 +21,12 @@ function AuthRegister() {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
-        toast.success("User registered successfully");
+        toast.success(data?.payload?.message);
         navigate("/auth/login");
+      } else {
+        toast.error(data?.payload?.message);
       }
+      console.log(data);
     });
   }
 
