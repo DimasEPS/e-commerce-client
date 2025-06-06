@@ -1,7 +1,6 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { SelectContent } from "@radix-ui/react-select";
-import { Select, SelectItem, SelectTrigger } from "../ui/select";
+import { Select, SelectItem, SelectValue, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
@@ -16,7 +15,7 @@ function CommonForm({
     let element = null;
     const value = formData[getControlItem.name] || "";
 
-    switch (getControlItem.compontenType) {
+    switch (getControlItem.componentType) {
       case "input":
         element = (
           <Input
@@ -103,10 +102,10 @@ function CommonForm({
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="felx flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {formControls.map((controlItems) => (
           <div className="w-full gap-1.5" key={controlItems.name}>
-            <Label className="mb-1 mt-2">{controlItems.label}</Label>
+            <Label className="mb-1 ">{controlItems.label}</Label>
             {inputByType(controlItems)}
           </div>
         ))}
