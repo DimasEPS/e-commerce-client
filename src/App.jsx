@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       {/* common components */}
-      <h1>header</h1>
+      {/* <h1>header</h1> */}
 
       <Routes>
         {/* auth */}
