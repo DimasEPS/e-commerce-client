@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
+import API from "@/utils/axiosConfig";
+
+// const BASEURL = import.meta.env.VITE_BASE_API_URL;
+// console.log(BASEURL);
 
 const initialState = {
   isAuthenticated: false,
@@ -10,21 +14,13 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      formData,
-      { withCredentials: true }
-    );
+    const response = await await API.post("/auth/register", formData);
     return response.data;
   }
 );
 
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/login",
-    formData,
-    { withCredentials: true }
-  );
+  const response = await API.post("/auth/login", formData);
   return response.data;
 });
 
@@ -32,16 +28,12 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
   async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/auth/check-auth",
-      {
-        withCredentials: true,
-        headers: {
-          "Cache-Control":
-            "no-cache, no-store, must-revalidate, proxy-revalidate",
-        },
-      }
-    );
+    const response = await API.get("auth/check-auth", {
+      headers: {
+        "Cache-Control":
+          "no-cache, no-store, must-revalidate, proxy-revalidate",
+      },
+    });
     return response.data;
   }
 );

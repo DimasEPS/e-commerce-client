@@ -36,7 +36,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
   if (
     isAuthenticated &&
     user?.role === "admin" &&
-    location.pathname.includes("/shop")
+    location.pathname.startsWith("/shop")
   ) {
     return <Navigate to="/admin/dashboard" />;
   }

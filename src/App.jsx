@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
@@ -21,6 +21,7 @@ import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function App() {
+  const Navigate = useNavigate();
   const { isAuthenticated, user, isLoading } = useSelector(
     (state) => state.auth
   );
@@ -39,6 +40,18 @@ function App() {
       {/* <h1>header</h1> */}
 
       <Routes>
+        {/* root path */}
+        <Route
+          path="/"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Navigate
+                to={user?.role === "admin" ? "/admin/dashboard" : "/shop/home"}
+              />
+            </CheckAuth>
+          }
+        />
+
         {/* auth */}
         <Route
           path="/auth"

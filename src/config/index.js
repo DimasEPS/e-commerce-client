@@ -18,7 +18,7 @@ export const registerFormControl = [
   {
     name: "password",
     type: "password",
-    comceholder: "Enter your password",
+    placeholder: "Enter your password",
     label: "Password",
     required: true,
   },
