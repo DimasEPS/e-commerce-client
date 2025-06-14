@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
 import API from "@/utils/axiosConfig";
-
-// const BASEURL = import.meta.env.VITE_BASE_API_URL;
-// console.log(BASEURL);
 
 const initialState = {
   isAuthenticated: false,
@@ -37,6 +33,11 @@ export const checkAuth = createAsyncThunk(
     return response.data;
   }
 );
+
+export const logoutUser = createAsyncThunk("/auth/logout", async () => {
+  const response = await API.post("/auth/logout");
+  return response.data;
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -90,6 +91,19 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+
+      // LOGOUT
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
