@@ -1,14 +1,16 @@
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 function ImageUpload({
   image,
   setImage,
   uploadedImageUrl,
   setUploadedImageUrl,
+  setImageLoading,
 }) {
   const inputRef = useRef(null);
   function handleImageChange(event) {
@@ -35,9 +37,32 @@ function ImageUpload({
     setImage(null);
     setUploadedImageUrl("");
     if (inputRef.current) {
-      inputRef.current.value = null; // Reset the input value
+      inputRef.current.value = null;
     }
   }
+
+  async function uploadImageToServer() {
+    setImageLoading(true);
+    const data = new FormData();
+    data.append("imageFile", image);
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_API_URL}/admin/products/upload-image`,
+      data
+    );
+    // console.log("Response from server:", response);
+    // console.log("Image URL:", response.data);
+
+    if (response?.data?.success) {
+      setUploadedImageUrl(response.data.result.url);
+      setImageLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (image) {
+      uploadImageToServer();
+    }
+  }, [image]);
 
   return (
     <div className="w-full max-w-md mx-auto">

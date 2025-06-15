@@ -26,6 +26,7 @@ function AdminProducts() {
   const [formData, setFormData] = useState(initialProduct);
   const [image, setImage] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [imageLoading, setImageLoading] = useState(false);
 
   function onSubmit() {
     // // Handle form submission logic here
@@ -58,6 +59,7 @@ function AdminProducts() {
               setImage={setImage}
               uploadedImageUrl={uploadedImageUrl}
               setUploadedImageUrl={setUploadedImageUrl}
+              setImageLoading={setImageLoading}
             />
             <CommonForm
               formData={formData}
