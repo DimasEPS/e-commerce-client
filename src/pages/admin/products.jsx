@@ -8,7 +8,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
-import { Fragment, useState } from "react";
+import { addNewProduct, getAllProducts } from "@/store/admin/products-slice";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 const initialProduct = {
   image: null,
@@ -28,13 +31,32 @@ function AdminProducts() {
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
-  function onSubmit() {
-    // // Handle form submission logic here
-    // console.log("Form submitted with data:", formData);
-    // // Reset form data after submission
-    // setFormData(initialProduct);
-    // setOpenCreateProduct(false);
+  const { products } = useSelector((state) => state.adminProduct);
+  const dispatch = useDispatch();
+
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(getAllProducts());
+        setOpenCreateProduct(false);
+        setFormData(initialProduct);
+        setImage(null);
+        toast.success(data?.payload?.message);
+      }
+    });
   }
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
+  console.log(products, uploadedImageUrl);
 
   return (
     <Fragment>
@@ -60,6 +82,7 @@ function AdminProducts() {
               uploadedImageUrl={uploadedImageUrl}
               setUploadedImageUrl={setUploadedImageUrl}
               setImageLoading={setImageLoading}
+              imageLoading={imageLoading}
             />
             <CommonForm
               formData={formData}

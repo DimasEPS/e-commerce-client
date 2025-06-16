@@ -4,6 +4,7 @@ import { Label } from "../ui/label";
 import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
 
 function ImageUpload({
   image,
@@ -11,6 +12,7 @@ function ImageUpload({
   uploadedImageUrl,
   setUploadedImageUrl,
   setImageLoading,
+  imageLoading,
 }) {
   const inputRef = useRef(null);
   function handleImageChange(event) {
@@ -50,7 +52,7 @@ function ImageUpload({
       data
     );
     // console.log("Response from server:", response);
-    // console.log("Image URL:", response.data);
+    // console.log("Image URL:", response.data.result.url);
 
     if (response?.data?.success) {
       setUploadedImageUrl(response.data.result.url);
@@ -87,6 +89,8 @@ function ImageUpload({
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload</span>
           </Label>
+        ) : imageLoading ? (
+          <Skeleton className="h-10 bg-green-100" />
         ) : (
           <div className="flex items-center justify-between mx-4">
             <div className="flex items-center">
