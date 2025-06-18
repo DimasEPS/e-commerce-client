@@ -1,4 +1,5 @@
 import ImageUpload from "@/components/admin/imageUpload";
+import AdminProductTile from "@/components/admin/productTile";
 import CommonForm from "@/components/common/form";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,7 +57,7 @@ function AdminProducts() {
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  console.log(products, uploadedImageUrl);
+  // console.log(products, uploadedImageUrl);
 
   return (
     <Fragment>
@@ -65,7 +66,15 @@ function AdminProducts() {
           Add New Product
         </Button>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4"></div>
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {products && products.length > 0 ? (
+          products.map((product) => {
+            return <AdminProductTile key={product._id} product={product} />;
+          })
+        ) : (
+          <p>No products found.</p>
+        )}
+      </div>
       <Sheet
         open={openCreateProduct}
         onOpenChange={() => setOpenCreateProduct(false)}
