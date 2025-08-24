@@ -15,6 +15,7 @@ import ShoppingListing from "./pages/shopping/listing";
 import ShoppingCheckout from "./pages/shopping/checkout";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
+import ForgotPassword from "./pages/auth/forgot-password";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
@@ -63,6 +64,7 @@ function App() {
         >
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
         </Route>
 
         {/* admin */}

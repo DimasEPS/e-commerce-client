@@ -49,6 +49,14 @@ function AuthLogin() {
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
+      <div className="text-sm text-center">
+        <Link
+          to="/auth/forgot-password"
+          className="font-medium text-primary hover:underline"
+        >
+          Forgot your password?
+        </Link>
+      </div>
     </div>
   );
 }
